@@ -48,21 +48,22 @@
             </div>
             <h4 class="text-center">Welcome back Admin!</h4>
             <h6 class="font-weight-light text-center">Happy to see you again!</h6>
-            <form class="pt-3">
+            <form class="pt-3" method="POST" action="{{ route('login') }}">
+            @csrf
               <div class="form-group mx-auto" style="max-width: 300px;">
-                <label for="exampleInputEmail">Username</label>
+                <label for="email">Email</label>
                 <div class="input-group">
-                  <input type="text" class="form-control form-control-lg" id="exampleInputEmail" placeholder="Username">
+                  <input type="email" class="form-control form-control-lg" id="email" name="email" placeholder="Email..." required autofocus>
                 </div>
               </div>
               <div class="form-group mx-auto" style="max-width: 300px;">
-                <label for="exampleInputPassword">Password</label>
+                <label for="password">Password</label>
                 <div class="input-group">
-                  <input type="password" class="form-control form-control-lg" id="exampleInputPassword" placeholder="Password">                        
+                  <input type="password" class="form-control form-control-lg" id="password" name="password" placeholder="Password" required>                        
                 </div>
               </div>
               <div class="my-3 text-center">
-                <a class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" href="/home">LOGIN</a>
+                <button class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" type="submit">LOGIN</button>
               </div>
             </form>
           </div>

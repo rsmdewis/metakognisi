@@ -323,21 +323,23 @@
           <div class="col-md-6" >
             <!-- Form -->
             <h1 class="modal-title mb-4" id="exampleModalLabel"><strong>Tes Kemampuan Metakognisi</strong></h1>
-            <form>
-              <div class="mb-3" style="margin-right: 20px;">
-                <label for="name" class="form-label">Nama</label>
-                <input type="text" class="form-control" id="name" placeholder="Masukkan nama Anda">
-              </div>
-              <div class="mb-3"style="margin-right: 20px;">
+            <form id="loginForm"method="POST" action="{{ route('login-mahasiswa') }}">
+              @csrf
+              <div class="mb-3">
                 <label for="nim" class="form-label">NIM</label>
-                <input type="text" class="form-control" id="nim" placeholder="Masukkan NIM Anda">
+                <input type="text" name="nim" class="form-control" id="nim" placeholder="Masukkan NIM Anda" required>
               </div>
-              <div style="text-align: right; margin-right: 20px; margin-bottom: 30px;">
-              <button type="button" class="btn btn-primary" id="btnStart" style="width: 80px; margin-right: 10px;">Start</button>
-    <button type="button" class="btn btn-danger" data-bs-dismiss="modal" style="width: 80px;">Batal</button>
-                </div>
+              <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" name="password" class="form-control" id="password" placeholder="Masukkan Password Anda" required>
+              </div>
+              <div class="d-flex justify-content-end">
+                <button type="submit" class="btn btn-primary me-2" id="btnStart">Login</button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Batal</button>
+              </div>
+              
+              <a data-bs-toggle="modal" data-bs-target="#registerModal"  class="link-register">Belum Punya Akun? Daftar Sekarang</a> <br>
                 <a href="/angket">Angket MAI</a>
-
             </form>
           </div>
         </div>
@@ -345,7 +347,61 @@
     </div>
   </div>
 </div>
+<style>
+  .link-register, .link-angket {
+    color: #007bff; /* Warna biru */
+    text-decoration: none; /* Menghilangkan garis bawah */
+    cursor: pointer; /* Mengubah kursor menjadi tangan */
+  }
 
+  .link-register:hover, .link-angket:hover {
+    text-decoration: underline; /* Menambahkan garis bawah saat hover */
+  }
+</style>
+<!-- Modal Register -->
+<div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="row" style="margin-top: 50px;">
+          <div class="col-md-6 text-center">
+            <!-- Image -->
+            <img src="assets/img/laptop.jpg" class="img-fluid rounded-circle" alt="...">
+          </div>
+          <div class="col-md-6">
+            <!-- Form -->
+            <h1 class="modal-title mb-4" id="registerModalLabel"><strong>Registrasi Mahasiswa</strong></h1>
+            <form method="POST" action="{{ route('mahasiswa.register') }}">
+              @csrf
+              <div class="mb-3">
+    <label for="nama" class="form-label">Nama</label>
+    <input type="text" class="form-control" id="nama" name="nama" placeholder="Masukkan Nama Anda">
+  </div>
+  <div class="mb-3">
+    <label for="nim" class="form-label">NIM</label>
+    <input type="text" class="form-control" id="nim" name="nim" placeholder="Masukkan NIM Anda">
+  </div>
+  <div class="mb-3">
+    <label for="email" class="form-label">Email</label>
+    <input type="email" class="form-control" id="email" name="email" placeholder="Masukkan Email Anda">
+  </div>
+  <div class="mb-3">
+    <label for="password" class="form-label">Password</label>
+    <input type="password" class="form-control" id="password" name="password" placeholder="Masukkan Password Anda">
+  </div>
+              <div style="text-align: right; margin-right: 20px; margin-bottom: 30px;">
+                <button type="submit" class="btn btn-primary" id="btnRegister" style="width: 80px; margin-right: 10px;">Daftar</button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal" style="width: 80px;">Batal</button>
+              </div>
+              <a data-bs-toggle="modal" data-bs-target="#exampleModal"  class="link-register">Sudah Punya Akun? Login Sekarang</a> <br>
+              <a href="/angket">Angket MAI</a>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 
     <div class="container copyright text-center mt-4">

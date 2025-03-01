@@ -20,10 +20,14 @@
                   <i class="mdi mdi-settings text-primary"></i>
                   Settings
                 </a>
-                <a class="dropdown-item" href="/log">
-                  <i class="mdi mdi-logout text-primary"></i>
-                  Logout
+                <a class="dropdown-item" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                    <i class="mdi mdi-logout text-primary"></i>
+                    Logout
                 </a>
+
+                <form id="logout-form" method="POST" action="{{ route('logout') }}" style="display: none;">
+                    @csrf
+                </form>
                 
                 
               </div>

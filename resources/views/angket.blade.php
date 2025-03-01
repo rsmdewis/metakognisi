@@ -1,36 +1,7 @@
-<!DOCTYPE html>
-<html lang="id">
-
-<head>
-  <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Metacognitive Test</title>
-  <meta content="" name="description">
-  <meta content="" name="keywords">
-
-  <!-- Favicons -->
-  <link href="assets/img/m.png" rel="icon">
-  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
-
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com" rel="preconnect">
-  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
-
-  <!-- Vendor CSS Files -->
-  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
-  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
-
-  <!-- Main CSS File -->
-  <link href="assets/css/main.css" rel="stylesheet">
-
-</head>
-
-<body class="service-details-page">
-
+@extends('layouts.sidebar_mhs')
+@section('content')
+  <!-- Page content -->
+  <div class="content">
   <header id="header" class="header d-flex align-items-center sticky-top">
     <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
 
@@ -56,12 +27,7 @@
     <div class="page-title py-3 bg-light" data-aos="fade">
       <div class="container d-lg-flex justify-content-between align-items-center">
         <h4 class="mb-2 mb-lg-0">Angket Metacognitive Awareness Inventory (MAI)</h4>
-        <nav class="breadcrumbs">
-          <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="/">Home</a></li>
-            <li class="breadcrumb-item active">Angket MAI</li>
-          </ol>
-        </nav>
+       
       </div>
     </div><!-- End Page Title -->
 
@@ -70,66 +36,25 @@
       <div class="container">
         <div class="row gy-5">
           <div class="col-lg-8" data-aos="fade-up" data-aos-delay="200">
-          <form>
-    <div class="mb-4">
-    <?php
-for ($i = 1; $i <= 10; $i++) {
-    echo '<label for="q' . $i . '" class="form-label"><strong>' . $i . '. Pertanyaan</strong></label>
-        <div class="options d-flex flex-wrap gap-3">
-            <label class="rounded-pill">
-                <input type="radio" name="q' . $i . '" value="selalu"> Selalu
-            </label>
-            <label class="rounded-pill">
-                <input type="radio" name="q' . $i . '" value="sering"> Sering
-            </label>
-            <label class=" rounded-pill">
-                <input type="radio" name="q' . $i . '" value="kadang-kadang"> Kadang-kadang
-            </label>
-            <label class="rounded-pill">
-                <input type="radio" name="q' . $i . '" value="jarang"> Jarang
-            </label>
-            <label class="rounded-pill">
-                <input type="radio" name="q' . $i . '" value="tidak pernah"> Tidak pernah
-            </label>
-        </div>
-        <br>';
-}
-?>
-
-    </div>
-
-    <div class="d-flex justify-content-between">
-    <button type="button" class="btn btn-primary" id="btnPrevious" style="width: 100px;">Previous</button>
-    <button type="button" class="btn btn-primary" id="btnNext" style="width: 100px; margin-right: 100px;">Next</button>
-
-    </div>
-</form>
-
+          
+            <form id="questionForm">
+              <div id="question-container"></div>
+              <div class="d-flex justify-content-between">
+                <button type="button" class="btn btn-primary" id="btnPrevious">Previous</button>
+                <button type="button" class="btn btn-primary" id="btnNext">Next</button>
+              </div>
+            </form>
           </div>
 
           <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
-          <div class="help-box d-flex flex-column justify-content align-items-center mt-4 p-3 rounded shadow">
-    <span id="nama" class="fw-bold">Risma Dewi Septiani</span>
-
-    <span id="nim" class="fw-bold">E41232549</span>
-
-</div><br>
-
+            
 
             <div class="service-box p-3 bg-light rounded">
               <h4 class="text-center">Navigasi Angket MAI</h4>
-              <div class="d-flex flex-wrap"  style="margin-left: 20px;">
-    <?php
-    $jumlah_tombol = 52;
-    $lebar_tombol_px = 50; // Misalnya, tentukan lebar tombol dalam piksel
-    for ($i = 1; $i <= $jumlah_tombol; $i++) {
-        echo '<button type="button" class="btn btn-outline-primary m-1" style="width: ' . $lebar_tombol_px . 'px;">' . $i . '</button>';
-    }
-    ?>
-
-
-
-                <!-- Repeat for all questions as needed -->
+              <div id="navigation-buttons" class="d-flex flex-wrap" style="margin-left: 20px;">
+                <!-- @for ($i = 1; $i <= 52; $i++)
+                  <button type="button" class="btn btn-outline-primary m-1" style="width: 50px;">{{ $i }}</button>
+                @endfor -->
               </div>
             </div>
 
@@ -142,36 +67,92 @@ for ($i = 1; $i <= 10; $i++) {
           </div>
         </div>
       </div>
-    </section><!-- /Service Details Section -->
+    </section>
 
   </main>
+  </div>
 
-  <footer id="footer" class="footer position-relative">
-    <div class="container text-center mt-4">
-      <p>&copy; <span>Copyright</span> <strong class="px-1 sitename">QuickStart</strong><span>All Rights Reserved</span></p>
-      <div class="credits">
-        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
-      </div>
-    </div>
-  </footer>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  const totalQuestions = {{ $angket->count() }};  // Jumlah total pertanyaan dari database
+    const questionsPerPage = 5;
+    let currentPage = 0;
+    const answers = {};
+    const angketData = @json($angket); // Data dari Blade ke JavaScript
 
-  <!-- Scroll Top -->
-  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+    function renderQuestions() {
+        $("#question-container").empty();
+        let start = currentPage * questionsPerPage;
+        let end = Math.min(start + questionsPerPage, totalQuestions);
 
-  <!-- Preloader -->
-  <div id="preloader"></div>
+        for (let i = start; i < end; i++) {
+            let item = angketData[i]; // Ambil data pertanyaan sesuai index
 
-  <!-- Vendor JS Files -->
-  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/vendor/php-email-form/validate.js"></script>
-  <script src="assets/vendor/aos/aos.js"></script>
-  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
-  
+            let questionHTML = `
+                <div class="mb-4">
+                    <label class="form-label">
+                        <strong>${item.no}. ${item.pertanyaan}</strong>
+                    </label>
+                    <div class="options d-flex flex-wrap gap-3">
+                        ${[4, 3, 2, 1, 0].map(value => `
+                            <label class="rounded-pill">
+                                <input type="radio" name="q${item.no}" value="${value}" ${answers[item.no] == value ? "checked" : ""}>
+                                ${["Selalu", "Sering", "Kadang-kadang", "Jarang", "Tidak pernah"][4 - value]}
+                            </label>
+                        `).join("")}
+                    </div>
+                </div>`;
+            $("#question-container").append(questionHTML);
+        }
+    }
 
-  <!-- Main JS File -->
-  <script src="assets/js/main.js"></script>
+  function renderNavigation() {
+    $("#navigation-buttons").empty();
+    for (let i = 1; i <= totalQuestions; i++) {
+      let pageIndex = Math.floor((i - 1) / questionsPerPage);
+      let btnClass = pageIndex === currentPage ? "active-page" : "";
+      if (answers[i] !== undefined) btnClass = "answered";
 
-</body>
+      $("#navigation-buttons").append(`
+        <button class="btn btn-outline-primary m-1 ${btnClass}" data-page="${pageIndex}">${i}</button>
+      `);
+    }
+  }
 
-</html>
+  $("#questionForm").on("change", "input[type=radio]", function () {
+    let name = $(this).attr("name");
+    let questionNumber = parseInt(name.replace("q", ""));
+    answers[questionNumber] = $(this).val();
+    renderNavigation();
+  });
+
+  $("#btnPrevious").click(function () {
+    if (currentPage > 0) {
+      currentPage--;
+      renderQuestions();
+      renderNavigation();
+    }
+  });
+
+  $("#btnNext").click(function () {
+    if ((currentPage + 1) * questionsPerPage < totalQuestions) {
+      currentPage++;
+      renderQuestions();
+      renderNavigation();
+    }
+  });
+
+  $("#navigation-buttons").on("click", "button", function () {
+    let selectedPage = parseInt($(this).data("page"));
+    currentPage = selectedPage;
+    renderQuestions();
+    renderNavigation();
+  });
+
+  $(document).ready(function () {
+    renderQuestions();
+    renderNavigation();
+  });
+</script>
+
+@endsection

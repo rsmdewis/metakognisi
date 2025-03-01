@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\AngketMetakognisi;
+use App\Models\Mahasiswa;
 
 class AuthController extends Controller
 {
     public function index()
     {
-        return view('login');
+        return view('log');
     }
 
     public function login(Request $request)
@@ -20,7 +22,7 @@ class AuthController extends Controller
         $request->session()->regenerate();
         $user = Auth::user();
         if ($user) {
-            return redirect()->route('dashboard');
+            return redirect()->route('home');
         }
     }
 
@@ -29,8 +31,20 @@ class AuthController extends Controller
     ]);
 }
 
-    public function dashboard()
+    public function home()
     {
-        return view('dashboard');
+    $jumlahAngket = AngketMetakognisi::count(); // Menghitung jumlah angket
+    $jumlahMahasiswa = Mahasiswa::count(); // Menghitung jumlah mahasiswa
+
+    return view('admin', compact('jumlahAngket', 'jumlahMahasiswa'));
     }
+
+    public function logout(Request $request)
+{
+    Auth::logout();
+    $request->session()->invalidate();
+    $request->session()->regenerateToken();
+
+    return redirect()->route('login');
+}
 }

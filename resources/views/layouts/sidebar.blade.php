@@ -15,17 +15,17 @@
         </li>
         
         <li class="nav-item">
-        <a class="nav-link" data-bs-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
+        <a class="nav-link" href="/angketmai">
             <i class="mdi mdi-grid-large menu-icon"></i>
             <span class="menu-title">Angket MAI</span>
-            <i class="menu-arrow"></i>
+            <!-- <i class="menu-arrow"></i> -->
           </a>
-          <div class="collapse" id="auth">
+          <!-- <div class="collapse" id="auth">
             <ul class="nav flex-column sub-menu">
               <li class="nav-item"> <a class="nav-link" href="/angketkm">Knowledge Metacognition</a></li>
               <li class="nav-item"> <a class="nav-link" href="/angketrm"> Regulation Metacognition</a></li>
             </ul>
-          </div>
+          </div> -->
           
         </li>
         
