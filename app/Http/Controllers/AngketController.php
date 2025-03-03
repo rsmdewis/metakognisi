@@ -87,6 +87,12 @@ class AngketController extends Controller
 
     public function show()
     {
+        
+
+        return view('mahasiswa.tes.dashboard');
+    }
+    public function tes()
+    {
         // Ambil semua data angket, termasuk relasi kodeAngket dan subAngket
         $angket = AngketMetakognisi::with(['kodeAngket', 'subAngket'])
         ->get();

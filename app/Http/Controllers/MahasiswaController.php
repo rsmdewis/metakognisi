@@ -68,7 +68,7 @@ class MahasiswaController extends Controller
         });
     }
 
-    $mahasiswa = $query->paginate(2);
+    $mahasiswa = $query->paginate(10);
         return view('mahasiswa', compact('mahasiswa'));
     }
     public function tambah(Request $request)

@@ -1,12 +1,104 @@
-@extends('layouts.sidebar_mhs')
-@section('content')
-  <!-- Page content -->
-  <div class="content">
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Metacognitive Test</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="assets/img/m.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Nunito:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <!-- Main CSS File -->
+  <link href="assets/css/main.css" rel="stylesheet">
+  <style>
+    .active-page { background-color: #388da8; color: white; }
+    .answered { background-color: green; color: white; }
+
+
+    /* Button navigasi pada halaman soal */
+    .active-page {
+      background-color: blue;
+      color: white;
+    }
+    .menu-icon {
+    margin-right: 10px; /* Space between icon and text */
+  }
+
+  .menu-title {
+    font-size: 16px;
+  }
+
+  /* Profile section styles */
+  .profile-section {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 10px;
+    border-bottom: 2px solid #ccc;
+  }
+
+  .profile-image {
+    width: 60px; /* Adjust profile picture size */
+    height: 60px;
+    border-radius: 50%; /* Circular image */
+    margin-right: 10px;
+  }
+  .mdi-account-circle.profile-image {
+    font-size: 40px; /* Adjust this size as needed */
+  }
+  .profile-info {
+    color: white;
+    justify-content: center;
+  }
+
+  .profile-name {
+    font-weight: bold;
+    justify-content: center;
+    font-size: 16px;
+  }
+
+  .profile-role {
+    font-size: 12px;
+    color:rgb(211, 208, 208);
+  }
+  </style>
+
+  <!-- =======================================================
+  * Template Name: Metakognisi
+  * Template URL: https://bootstrapmade.com/quickstart-bootstrap-startup-website-template/
+  * Updated: Jun 14 2024 with Bootstrap v5.3.3
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+</head>
+
+<body class="index-page">
+
+  
+
+<!-- Page content -->
+<div class="content">
   <header id="header" class="header d-flex align-items-center sticky-top">
     <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
 
       <a href="index.html" class="logo d-flex align-items-center me-auto">
-        <h1 class="sitename">Tes Kemampuan Metakognisi</h1>
+        <h1 class="sitename">Angket Metacognitive Awareness Inventory (MAI)</h1>
       </a>
 
       <nav id="navmenu" class="navmenu d-none d-lg-block">
@@ -15,7 +107,7 @@
         </ul>
       </nav>
       
-      <a class="btn btn-primary" href="/hasil">Finish</a>
+      <!-- <a class="btn btn-primary" href="/hasil">Finish</a> -->
       <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
 
     </div>
@@ -23,13 +115,20 @@
 
   <main class="main">
 
-    <!-- Page Title -->
-    <div class="page-title py-3 bg-light" data-aos="fade">
-      <div class="container d-lg-flex justify-content-between align-items-center">
-        <h4 class="mb-2 mb-lg-0">Angket Metacognitive Awareness Inventory (MAI)</h4>
-       
-      </div>
-    </div><!-- End Page Title -->
+  <div class="page-title py-3 bg-light" data-aos="fade">
+  <div class="container"><br>
+    <p style="font-family: 'Times New Roman', serif;">
+      Ini bukanlah sebuah tes seperti tes pada umumnya yang harus memutar otak. Jawaban kamu tidak dinilai benar atau salah, tetapi penilaian tergantung kejujuran dan ketepatan Anda menjawab soal.
+    </p>
+    <ul style="font-family: 'Times New Roman', serif;">
+      <li>Pilih salah satu pernyataan yang paling sesuai dengan diri Anda.</li>
+      <li>Tes ini terdiri dari 52 pernyataan yang perlu Anda jawab dengan jujur sesuai dengan kondisi yang Anda alami, Anda yakini atau Anda rasakan.</li>
+      <li>Setelah membaca setiap pernyataan dengan cermat, pilihlah jawaban yang paling menggambarkan diri Anda.</li>
+      <li>Tidak ada jawaban benar atau salah, jadi pilih yang paling mendekati diri Anda.</li>
+      <li>Harap pastikan untuk membaca semua pernyataan dengan cermat dan jujur sebelum menentukan pilihan Anda.</li>
+    </ul><br>
+  </div>
+</div>
 
     <!-- Service Details Section -->
     <section id="service-details" class="service-details section">
@@ -37,9 +136,11 @@
         <div class="row gy-5">
           <div class="col-lg-8" data-aos="fade-up" data-aos-delay="200">
           
-            <form id="questionForm">
+            <form id="questionForm" method="POST" action="{{ route('angket.store') }}">
+              @csrf 
               <div id="question-container"></div>
-              <div class="d-flex justify-content-between">
+              <input type="hidden" name="all_jawaban" id="allJawaban">
+              <div class="d-flex justify-content-between mt-3">
                 <button type="button" class="btn btn-primary" id="btnPrevious">Previous</button>
                 <button type="button" class="btn btn-primary" id="btnNext">Next</button>
               </div>
@@ -57,6 +158,9 @@
                 @endfor -->
               </div>
             </div>
+<br>
+<button type="submit" form="questionForm" class="btn btn-success mt-3 w-100" id="btnSubmit" disabled>Submit</button>
+<br>
 
             <div class="help-box d-flex flex-column justify-content-center align-items-center">
               <i class="bi bi-headset help-icon"></i>
@@ -73,12 +177,12 @@
   </div>
 
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-  const totalQuestions = {{ $angket->count() }};  // Jumlah total pertanyaan dari database
+  <script>
+    const totalQuestions = {{ $angket->count() }};
     const questionsPerPage = 5;
     let currentPage = 0;
     const answers = {};
-    const angketData = @json($angket); // Data dari Blade ke JavaScript
+    const angketData = @json($angket);
 
     function renderQuestions() {
         $("#question-container").empty();
@@ -86,18 +190,17 @@
         let end = Math.min(start + questionsPerPage, totalQuestions);
 
         for (let i = start; i < end; i++) {
-            let item = angketData[i]; // Ambil data pertanyaan sesuai index
-
+            let item = angketData[i];
             let questionHTML = `
-                <div class="mb-4">
+                <div class="card p-3 mb-3 shadow-sm border">
                     <label class="form-label">
                         <strong>${item.no}. ${item.pertanyaan}</strong>
                     </label>
                     <div class="options d-flex flex-wrap gap-3">
-                        ${[4, 3, 2, 1, 0].map(value => `
+                        ${[5, 4, 3, 2, 1].map(value => `
                             <label class="rounded-pill">
-                                <input type="radio" name="q${item.no}" value="${value}" ${answers[item.no] == value ? "checked" : ""}>
-                                ${["Selalu", "Sering", "Kadang-kadang", "Jarang", "Tidak pernah"][4 - value]}
+                                <input type="radio" name="jawaban[${item.no}]" value="${value}" ${answers[item.no] == value ? "checked" : ""}>
+                                ${["Selalu", "Sering", "Kadang-kadang", "Jarang", "Tidak pernah"][5 - value]}
                             </label>
                         `).join("")}
                     </div>
@@ -106,53 +209,83 @@
         }
     }
 
-  function renderNavigation() {
-    $("#navigation-buttons").empty();
-    for (let i = 1; i <= totalQuestions; i++) {
-      let pageIndex = Math.floor((i - 1) / questionsPerPage);
-      let btnClass = pageIndex === currentPage ? "active-page" : "";
-      if (answers[i] !== undefined) btnClass = "answered";
+    function renderNavigation() {
+      $("#navigation-buttons").empty();
+      for (let i = 1; i <= totalQuestions; i++) {
+        let pageIndex = Math.floor((i - 1) / questionsPerPage);
+        let btnClass = pageIndex === currentPage ? "active-page" : "";
+        if (answers[i] !== undefined) btnClass = "answered";
 
-      $("#navigation-buttons").append(`
-        <button class="btn btn-outline-primary m-1 ${btnClass}" data-page="${pageIndex}">${i}</button>
-      `);
+        $("#navigation-buttons").append(`
+          <button class="btn btn-outline-primary m-1 ${btnClass}" data-page="${pageIndex}">${i}</button>
+        `);
+      }
+      checkAllAnswered();
     }
-  }
 
-  $("#questionForm").on("change", "input[type=radio]", function () {
-    let name = $(this).attr("name");
-    let questionNumber = parseInt(name.replace("q", ""));
-    answers[questionNumber] = $(this).val();
-    renderNavigation();
-  });
+    function checkAllAnswered() {
+      let allAnswered = Object.keys(answers).length === totalQuestions;
+    $("#btnSubmit").prop("disabled", !allAnswered);
 
-  $("#btnPrevious").click(function () {
-    if (currentPage > 0) {
-      currentPage--;
+    // Simpan semua jawaban ke input hidden
+    $("#allJawaban").val(JSON.stringify(answers));
+    }
+
+    $("#questionForm").on("change", "input[type=radio]", function () {
+      let questionNumber = parseInt($(this).attr("name").match(/\d+/)[0]);
+      answers[questionNumber] = $(this).val();
+      renderNavigation();
+    });
+
+    $("#btnPrevious").click(function () {
+      if (currentPage > 0) {
+        currentPage--;
+        renderQuestions();
+        renderNavigation();
+      }
+    });
+
+    $("#btnNext").click(function () {
+      if ((currentPage + 1) * questionsPerPage < totalQuestions) {
+        currentPage++;
+        renderQuestions();
+        renderNavigation();
+      }
+    });
+
+    $("#navigation-buttons").on("click", "button", function () {
+      let selectedPage = parseInt($(this).data("page"));
+      currentPage = selectedPage;
       renderQuestions();
       renderNavigation();
-    }
-  });
-
-  $("#btnNext").click(function () {
-    if ((currentPage + 1) * questionsPerPage < totalQuestions) {
-      currentPage++;
+    });
+    $("#questionForm").submit(function () {
+      $("#allJawaban").val(JSON.stringify(answers));
+    });
+    $(document).ready(function () {
       renderQuestions();
       renderNavigation();
-    }
-  });
+    });
+  </script>
 
-  $("#navigation-buttons").on("click", "button", function () {
-    let selectedPage = parseInt($(this).data("page"));
-    currentPage = selectedPage;
-    renderQuestions();
-    renderNavigation();
-  });
 
-  $(document).ready(function () {
-    renderQuestions();
-    renderNavigation();
-  });
-</script>
+  <!-- Scroll Top -->
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
-@endsection
+  <!-- Preloader -->
+  <div id="preloader"></div>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+  <script src="assets/vendor/aos/aos.js"></script>
+  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+
+  <!-- Main JS File -->
+  <script src="assets/js/main.js"></script>
+
+</body>
+
+</html>
+  

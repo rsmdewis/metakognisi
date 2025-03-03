@@ -43,23 +43,23 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <th scope="row">1</th>
-                <td>Knowledge of Metacognition (KM)</td>
-                <td>85</td>
-                <td>Sedang</td>
-            </tr>
-            <tr>
-                <th scope="row">2</th>
-                <td>Regulation of Metacognition (RM)</td>
-                <td>78</td>
-                <td>Tinggi</td>
-            </tr>
+        <tr>
+                            <th>1</th>
+                            <td>Knowledge of Metacognition (KM)</td>
+                            <td>{{ $hasilAngket->nilai_km }}</td>
+                            <td>{{ ucfirst($kategori_km) }}</td>
+                        </tr>
+                        <tr>
+                            <th>2</th>
+                            <td>Regulation of Metacognition (RM)</td>
+                            <td>{{ $hasilAngket->nilai_rm }}</td>
+                            <td>{{ ucfirst($kategori_rm) }}</td>
+                        </tr>
             <!-- Add more rows as needed -->
         </tbody>
     </table><br><br>
     <div class="info-box">
-    <p><strong>Apa itu Knowledge of Metacognition (KM)?</strong></p>
+    <!-- <p><strong>Apa itu Knowledge of Metacognition (KM)?</strong></p>
     
         <p>Knowledge of Metacognition (KM) merujuk pada pemahaman individu tentang proses berpikir dan belajar mereka sendiri. Ini mencakup pengetahuan tentang bagaimana mereka belajar, berpikir, dan memecahkan masalah. Dengan memahami KM, seseorang dapat mengenali kekuatan dan kelemahan dalam cara mereka memproses informasi, serta memilih dan mengimplementasikan strategi belajar yang lebih efektif.</p>
     
@@ -67,15 +67,21 @@
 
     <p><strong>Apa itu Regulation of Metacognition (RM)?</strong></p>
         <p>Regulation of Metacognition (RM) adalah kemampuan individu untuk mengontrol dan mengelola proses berpikir mereka sendiri. Ini mencakup perencanaan, pemantauan, evaluasi, debugging, dan manajemen informasi. Dengan RM, seseorang dapat memilih, menerapkan, dan menyesuaikan strategi belajar mereka dengan lebih efektif untuk mencapai hasil yang optimal.</p>
-</div>
+     -->
+    <p><strong>Saran Knowledge of Metacognition (KM)?</strong></p>
+    <p>{{ $saran_km }}</p>
+    <p><strong>Saran Knowledge of Metacognition (KM)?</strong></p>
+    <p>{{ $saran_rm }}</p>
+      </div>
 
 
           </div>
 
           <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
             <div class="service-box p-3 bg-light rounded">
-              <h4 class="text-center">Saran</h4>
-              <p><strong>Hi, Risma!</strong></p>
+              <h4 class="text-center">Catatan</h4>
+              <p><strong>Hi, {{ Auth::guard('mahasiswa')->user()->nama }}!</strong></p>
+                    <p>Kemampuan metakognisimu berada pada kategori <strong>{{ ucfirst($hasil_akhir) }}</strong></p>
               <p><br><br><br></p>
               <div class="d-flex flex-wrap"  style="margin-left: 20px;">
     

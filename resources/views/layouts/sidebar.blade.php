@@ -35,6 +35,12 @@
             <span class="menu-title">Mahasiswa</span>
           </a>
         </li>
+        <li class="nav-item">
+        <a class="nav-link" href="/saran">
+            <i class="mdi mdi-message-text menu-icon"></i>
+            <span class="menu-title">Saran</span>
+          </a>
+        </li>
         
         <li class="nav-item">
           <a class="nav-link" href="/laporan">

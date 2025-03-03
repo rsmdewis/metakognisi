@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\AngketController;
+use App\Http\Controllers\HasilController;
+use App\Http\Controllers\SaranController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,7 +26,10 @@ Route::get('/', function () {
 // })->middleware('auth:mahasiswa');
 Route::get('/home_mahasiswa', [AngketController::class, 'home'])->name('angket.home')->middleware('auth:mahasiswa');
 Route::get('/angket', [AngketController::class, 'show'])->name('angket.show')->middleware('auth:mahasiswa');
-Route::get('/angket_hasil', [AngketController::class, 'hasil'])->name('angket.hasil')->middleware('auth:mahasiswa');
+Route::get('/angketmaites', [AngketController::class, 'tes'])->name('angketmai.show')->middleware('auth:mahasiswa');
+Route::post('/submitangket', [HasilController::class, 'store'])->name('angket.store')->middleware('auth:mahasiswa');
+Route::get('/angket_info', [HasilController::class, 'info'])->name('angket.info')->middleware('auth:mahasiswa');
+Route::get('/angket_hasil', [HasilController::class, 'show'])->name('angket.hasil')->middleware('auth:mahasiswa');
 
 
 Route::get('/angketrm', function () {
@@ -56,3 +61,11 @@ Route::get('/kode-angket', [AngketController::class, 'getKodeAngkets']);
 Route::get('/sub-angket/{kodeAngket}', [AngketController::class, 'getSubAngkets']);
 Route::put('/angketmai/{id}', [AngketController::class, 'update'])->name('angket.update');
 Route::delete('/angketmai/{id}', [AngketController::class, 'destroy'])->name('angket.delete');
+
+
+
+Route::get('/saran', [SaranController::class, 'index'])->name('saran.tampil')->middleware('auth');
+Route::post('/saran/tambah', [SaranController::class, 'store'])->name('tambah.saran');
+Route::put('/saran/update/{saran}', [SaranController::class, 'update'])->name('saran.update');
+Route::delete('/saran/delete/{saran}', [SaranController::class, 'destroy'])->name('saran.delete');
+Route::get('/kode-angket', [SaranController::class, 'getKodeAngket']);

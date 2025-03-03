@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 
 <head>
   <meta charset="utf-8">
@@ -15,7 +15,7 @@
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com" rel="preconnect">
   <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Nunito:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 
   <!-- Vendor CSS Files -->
   <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -30,44 +30,6 @@
     .active-page { background-color: #388da8; color: white; }
     .answered { background-color: green; color: white; }
 
-    #sidebar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 230px;
-      height: 100%;
-      background-color: #388da8; /* Background biru */
-      color: #fff; /* Teks putih */
-      padding: 20px;
-      box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-    }
-
-    #sidebar .sidebar-heading {
-      font-size: 0.9rem;
-      margin-bottom: 10px;
-    }
-
-    #sidebar a {
-      color: #fff;
-      text-decoration: none;
-      display: block;
-      padding: 10px 15px;
-      margin: 5px 0;
-      border-radius: 5px;
-      transition: background-color 0.3s;
-      font-weight: bold;
-    }
-
-    #sidebar a:hover,
-    #sidebar a.active {
-      background-color: #2b6d82;
-    }
-
-    /* Content area (agar tidak tertutup oleh sidebar) */
-    .content {
-      margin-left: 220px;
-      padding: 20px;
-    }
 
     /* Button navigasi pada halaman soal */
     .active-page {
@@ -116,58 +78,56 @@
     color:rgb(211, 208, 208);
   }
   </style>
-  <link href="https://cdn.jsdelivr.net/npm/@mdi/font/css/materialdesignicons.min.css" rel="stylesheet">
 
+  <!-- =======================================================
+  * Template Name: Metakognisi
+  * Template URL: https://bootstrapmade.com/quickstart-bootstrap-startup-website-template/
+  * Updated: Jun 14 2024 with Bootstrap v5.3.3
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
 </head>
 
-<body class="service-details-page">
-<!-- Sidebar -->
-<div id="sidebar">
-<!-- Profile Section with Icon -->
-<div class="profile-section">
-<i class="mdi mdi-account-circle profile-image"></i>
-        <div class="profile-info">
-        @php
-        $mahasiswa = auth()->guard('mahasiswa')->user();
-    @endphp
-    <span class="profile-name">{{ $mahasiswa->nama }}</span>
-    <br>
-    <span class="profile-role">{{ $mahasiswa->nim }}</span>
+<body class="index-page">
+
+  
+
+<!-- Page content -->
+<div class="content">
+  <header id="header" class="header d-flex align-items-center sticky-top">
+    <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
       
-        </div>
+      <!-- <a class="btn btn-primary" href="/hasil">Finish</a> -->
+      <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+
     </div>
-    <div class="sidebar-heading">MENU</div>
-    <!-- Link to home route -->
-    <a href="{{ route('angket.home') }}">
-        <i class="mdi mdi-home menu-icon"></i> <!-- Home icon -->
-        <span class="menu-title">Home</span>
-    </a>
+  </header>
 
-    <!-- Link to angket route -->
-    <a href="{{ route('angket.show') }}">
-        <i class="mdi mdi-pencil menu-icon"></i> <!-- Pencil icon -->
-        <span>Tes Metakognisi</span>
-    </a>
+  <main class="main">
 
-    <!-- Link to hasil route -->
-    <a href="{{ route('angket.hasil') }}">
-        <i class="mdi mdi-chart-bar menu-icon"></i> <!-- Chart icon -->
-        <span>Hasil</span>
-    </a>
+  <div class="d-flex justify-content-center align-items-center vh-100 bg-light text-center" data-aos="fade">
+    <div>
+        <h3 class="fw-bold" style="font-family: 'Times New Roman', serif; font-size: 28px;">
+            Anda telah menyelesaikan tes <br> <span class="text-primary">Metacognitive Awareness Inventory</span>
+        </h3>
+        <p style="font-family: 'Times New Roman', serif; font-size: 18px;">
+            Silakan lihat hasil dari kemampuan metakognisi Anda!
+        </p>
+        <a href="{{ route('angket.hasil') }}" class="btn btn-primary btn-lg mt-3 px-4 py-2 shadow-lg rounded-pill" 
+           style="font-size: 20px; transition: 0.3s;">
+            <i class="fas fa-chart-line"></i> Lihat Hasil
+        </a>
+    </div>
+</div>
+
+    
+
+  </main>
   </div>
 
-  <!-- Page content -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   
-  @yield('content')
-  
-  <!-- <footer id="footer" class="footer position-relative">
-    <div class="container text-center mt-4">
-      <p>&copy; <span>Copyright</span> <strong class="px-1 sitename">QuickStart</strong><span>All Rights Reserved</span></p>
-      <div class="credits">
-        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
-      </div>
-    </div>
-  </footer> -->
+
 
   <!-- Scroll Top -->
   <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
@@ -181,7 +141,6 @@
   <script src="assets/vendor/aos/aos.js"></script>
   <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
   <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
-  
 
   <!-- Main JS File -->
   <script src="assets/js/main.js"></script>
@@ -189,3 +148,4 @@
 </body>
 
 </html>
+  
