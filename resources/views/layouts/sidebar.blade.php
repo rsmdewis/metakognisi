@@ -36,6 +36,12 @@
           </a>
         </li>
         <li class="nav-item">
+        <a class="nav-link" href="{{ route('admin.skenario.index') }}">
+            <i class="mdi mdi-book menu-icon"></i>
+            <span class="menu-title">Skenario</span>
+          </a>
+        </li>
+        <li class="nav-item">
         <a class="nav-link" href="/saran">
             <i class="mdi mdi-message-text menu-icon"></i>
             <span class="menu-title">Saran</span>
@@ -48,9 +54,9 @@
             <span class="menu-title">Laporan</span>
           </a>
         </li>
-        <li class="nav-item">
+        <!-- <li class="nav-item">
           <a class="nav-link" href="/grafik">
             <i class="mdi mdi-chart-pie menu-icon"></i>
             <span class="menu-title">Charts</span>
           </a>
-        </li>
+        </li> -->

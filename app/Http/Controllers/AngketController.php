@@ -7,6 +7,7 @@ use App\Models\KodeAngket;
 use App\Models\SubAngket;
 use App\Models\AngketMetakognisi;
 use App\Models\Mahasiswa;
+use App\Models\Skenario;
 use Illuminate\Support\Facades\Auth;
 class AngketController extends Controller
 {
@@ -23,9 +24,11 @@ class AngketController extends Controller
                   ->orWhere('pertanyaan', 'like', '%' . $searchTerm . '%');
         });
     }
+    $kodeAngketOptions = KodeAngket::all(); 
+    $kodeSubAngketOptions = SubAngket::all()->groupBy('kode_angket'); 
 
     $angketmetakognisi = $query->paginate(5);
-        return view('angketkm', compact('angketmetakognisi'));
+        return view('admin.angket.angket', compact('angketmetakognisi', 'kodeAngketOptions', 'kodeSubAngketOptions'));
     }
     // Mengambil data kode angket
     public function getKodeAngkets()
@@ -61,18 +64,28 @@ class AngketController extends Controller
 
         return redirect()->route('angket.tampil')->with('success', 'Data Angket berhasil disimpan');
     }
+    public function checkNo(Request $request)
+    {
+        $no = $request->query('no');
+        $exists = AngketMetakognisi::where('no', $no)->exists();
+
+        return response()->json(['exists' => $exists]);
+    }
     public function update(Request $request, $id)
     {
         // Validasiasi data yang dikirim dari formulir
-        $validatedData = $request->validate([
-            'no' => 'required|integer',
+        $request->validate([
             'kode_angket' => 'required',
             'kode_subangket' => 'required',
             'pertanyaan' => 'required|string',
         ]);
 
-        $angketmetakognisi = AngketMetakognisi::where('id', $id)->firstOrFail();
-        $angketmetakognisi->update($validatedData);
+        $angket = AngketMetakognisi::where('id', $id)->firstOrFail();
+        $angket->update([
+            'kode_angket' => $request->kode_angket,
+            'kode_subangket' => $request->kode_subangket,
+            'pertanyaan' => $request->pertanyaan,
+        ]);
 
 
         // Redirect ke halaman lain atau tampilkan pesan sukses
@@ -87,9 +100,8 @@ class AngketController extends Controller
 
     public function show()
     {
-        
-
-        return view('mahasiswa.tes.dashboard');
+        $skenario = Skenario::first(); // Sesuaikan jika lebih dari satu skenario
+        return view('mahasiswa.tes.dashboard', compact('skenario'));
     }
     public function tes()
     {
@@ -97,7 +109,7 @@ class AngketController extends Controller
         $angket = AngketMetakognisi::with(['kodeAngket', 'subAngket'])
         ->get();
 
-        return view('angket', compact('angket'));
+        return view('mahasiswa.tes.angket', compact('angket'));
     }
     public function home()
     {
@@ -107,7 +119,7 @@ class AngketController extends Controller
         if (!$mahasiswa) {
             return redirect()->route('login.mahasiswa')->with('error', 'Anda harus login terlebih dahulu.');
         }
-        return view('home_mhs', compact('mahasiswa'))->with('mahasiswa', $mahasiswa);
+        return view('mahasiswa.home.home_mhs', compact('mahasiswa'))->with('mahasiswa', $mahasiswa);
     }
     public function hasil()
     {

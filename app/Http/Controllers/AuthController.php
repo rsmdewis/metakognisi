@@ -36,7 +36,7 @@ class AuthController extends Controller
     $jumlahAngket = AngketMetakognisi::count(); // Menghitung jumlah angket
     $jumlahMahasiswa = Mahasiswa::count(); // Menghitung jumlah mahasiswa
 
-    return view('admin', compact('jumlahAngket', 'jumlahMahasiswa'));
+    return view('admin.dashboard.admin', compact('jumlahAngket', 'jumlahMahasiswa'));
     }
 
     public function logout(Request $request)

@@ -141,8 +141,8 @@
               <div id="question-container"></div>
               <input type="hidden" name="all_jawaban" id="allJawaban">
               <div class="d-flex justify-content-between mt-3">
-                <button type="button" class="btn btn-primary" id="btnPrevious">Previous</button>
-                <button type="button" class="btn btn-primary" id="btnNext">Next</button>
+                <button type="button" class="btn btn-primary btn-nav" id="btnPrevious">Previous</button>
+                <button type="button" class="btn btn-primary btn-nav" id="btnNext">Next</button>
               </div>
             </form>
           </div>
@@ -237,11 +237,17 @@
       renderNavigation();
     });
 
+    function updateNavButtons() {
+    $("#btnPrevious").prop("disabled", currentPage === 0);
+    $("#btnNext").prop("disabled", (currentPage + 1) * questionsPerPage >= totalQuestions); 
+}
+
     $("#btnPrevious").click(function () {
       if (currentPage > 0) {
         currentPage--;
         renderQuestions();
         renderNavigation();
+        updateNavButtons();
       }
     });
 
@@ -250,8 +256,14 @@
         currentPage++;
         renderQuestions();
         renderNavigation();
+        updateNavButtons();
       }
     });
+    $(document).ready(function () {
+    renderQuestions();
+    renderNavigation();
+    updateNavButtons(); // Pastikan tombol dinonaktifkan sesuai kondisi saat halaman pertama dimuat
+});
 
     $("#navigation-buttons").on("click", "button", function () {
       let selectedPage = parseInt($(this).data("page"));

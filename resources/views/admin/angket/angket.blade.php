@@ -45,7 +45,7 @@
                         <td>{{ $angket->pertanyaan }}</td>
                         <td>
                             <!-- Tombol edit -->
-                            <button class="btn btn-sm btn-warning btn-icon-text" type="button"  data-toggle="modal" data-target="#ubahBiodataModal{{ $angket->id }}">
+                            <button class="btn btn-sm btn-warning btn-icon-text" type="button" data-bs-toggle="modal" data-bs-target="#editAngketModal{{ $angket->id }}">
                                 <i class="mdi mdi-pencil btn-icon-prepend"></i>
                                 Edit
                             </button>
@@ -53,7 +53,7 @@
                             <form action="{{ route('angket.delete', $angket->id) }}" method="POST" style="display: inline-block;">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="btn btn-sm btn-danger btn-icon-text" data-toggle="tooltip" title="Hapus Admin Desa" onclick="return confirm('Apakah Kamu Yakin?');">
+                        <button type="submit" class="btn btn-sm btn-danger btn-icon-text" data-toggle="tooltip" title="Hapus Angket MAI" onclick="return confirm('Apakah Kamu Yakin?');">
                             <span class="mdi mdi-delete btn-icon-prepend"></span> Hapus
                         </button>
                         </form>
@@ -112,18 +112,71 @@
                     </div>
                     <div class="mb-3">
                         <label for="pertanyaanAngket" class="form-label">Pertanyaan</label>
-                        <input type="text" class="form-control" id="pertanyaanAngket" name="pertanyaan" placeholder="Masukkan pertanyaan angket" required>
+                        <textarea type="text" class="form-control" id="pertanyaanAngket" name="pertanyaan" placeholder="Masukkan pertanyaan angket" required></textarea>
                     </div>
                 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="Submit" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                <button type="Submit" class="btn btn-primary">Tambah Angket</button>
             </div>
             </form>
         </div>
     </div>
 </div>
+@foreach($angketmetakognisi as $angket)
+<div class="modal fade" id="editAngketModal{{ $angket->id }}" tabindex="-1" role="dialog" aria-labelledby="editAngketModalLabel{{ $angket->id }}" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editAngketModalLabel{{ $angket->id }}">Edit Angket</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editAngketForm{{ $angket->id }}" action="{{ route('angket.update', $angket->id) }}" method="POST">
+                    @csrf
+                    @method('PUT')
+                    <div class="mb-3">
+                        <label for="editNo{{ $angket->id }}" class="form-label">Nomor</label>
+                        <input type="number" class="form-control" id="editNo{{ $angket->id }}" name="no" value="{{ $angket->no }}" autofocus readonly disabled>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editKodeAngket{{ $angket->id }}" class="form-label">Kode Angket</label>
+                        <select class="form-control" id="editKodeAngket{{ $angket->id }}" name="kode_angket" required>
+                            <option value="">Pilih Kode Angket</option>
+                            @foreach($kodeAngketOptions as $kode)
+                                <option value="{{ $kode->kode_angket }}" {{ $angket->kode_angket == $kode->kode_angket ? 'selected' : '' }}>
+                                    {{ $kode->nama }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editKodeSubAngket{{ $angket->id }}" class="form-label">Kode Sub Angket</label>
+                        <select class="form-control" id="editKodeSubAngket{{ $angket->id }}" name="kode_subangket" required>
+                            <option value="">Pilih Kode Sub Angket</option>
+                            @foreach($kodeSubAngketOptions[$angket->kode_angket] ?? [] as $subAngket)
+                                <option value="{{ $subAngket->kode_subangket }}" {{ $angket->kode_subangket == $subAngket->kode_subangket ? 'selected' : '' }}>
+                                    {{ $subAngket->nama }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editPertanyaan{{ $angket->id }}" class="form-label">Pertanyaan</label>
+                        <textarea class="form-control" id="editPertanyaan{{ $angket->id }}" name="pertanyaan" rows="4" required>{{ $angket->pertanyaan }}</textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                <button type="submit" form="editAngketForm{{ $angket->id }}" class="btn btn-primary">Simpan Perubahan</button>
+            </div>
+        </div>
+    </div>
+</div>
+@endforeach
+
 <script>
 // Mengambil data Kode Angket dari server menggunakan AJAX
 fetch('/kode-angket')
@@ -181,6 +234,24 @@ document.getElementById('saveAngketButton').addEventListener('click', function()
         $('#addAngketModal').modal('hide');
     } else {
         form.reportValidity(); // Menampilkan pesan validasi jika form tidak lengkap
+    }
+});
+document.getElementById("no").addEventListener("blur", function() {
+    var no = this.value;
+    if (no.trim() !== '') {
+        fetch(`/check-no?no=${no}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.exists) {
+                alert("NO Angket sudah ada. Silakan gunakan no yang lain.");
+                document.getElementById("no").style.borderColor = 'red';
+            } else {
+                document.getElementById("no").style.borderColor = '';
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
     }
 });
 </script>

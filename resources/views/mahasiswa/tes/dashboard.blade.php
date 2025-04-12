@@ -13,17 +13,25 @@
   </header>
 
   <main class="main">
-  <div class="container section-title" data-aos="fade-up">
-        <h2>Kenali Kemampuan Metakognisi Anda</h2>
-        <p>Dengan Mengikuti Tes Metakognisi dengan Angket Metacognitive Awareness inventory</p>
-      </div><!-- End Section Title -->
+  
 
       <div class="container">
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Kenali Kemampuan Metakognisi Anda</h2>
+        <!-- <p>Dengan Mengikuti Tes Metakognisi dengan Angket Metacognitive Awareness inventory</p> -->
+        <div class="row gy">
+        <div class="col-lg" data-aos="zoom-in" data-aos-delay="100">
+          <div class="card shadow-sm border rounded-3 p-3 " style="font-family: 'Times New Roman', serif; text-align: left;">
+            {!!$skenario->skenario !!}
+          </div>
+        </div>
+      </div>
+      </div><!-- End Section Title -->
       <div class="row gy-4">
         <div class="col-lg-4" data-aos="zoom-in" data-aos-delay="100">
           <div class="card shadow-sm border rounded-3 p-3 text-center" style="font-family: 'Times New Roman', serif;">
             <i class="bi bi-card-list fs-3 mb-2"></i>
-            <p>Angket Metacognitive Awareness Inventory (MAI) terdiri dari 52 pernyataan, di mana Anda diminta mengukur posisi Anda dalam menjawab pertanyaan dengan pilihan "Selalu", "Jarang", "Tidak Pernah".</p>
+            <p>Angket Metacognitive Awareness Inventory (MAI) terdiri dari 52 pernyataan, di mana Anda diminta mengukur posisi Anda dalam menjawab pertanyaan dengan pilihan "Selalu", "Sering", "Kadang-kadang", "Jarang", "Tidak Pernah".</p>
           </div>
         </div>
 
@@ -42,9 +50,9 @@
         </div>
       </div>
     </div>
-    
-    <div class="text-center mt-4">
-      <button class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#startTestModal">Mulai Tes</button>
+    <br>
+    <div class="button-container">
+      <button class="custom-btn btn-primary-custom" data-bs-toggle="modal" data-bs-target="#startTestModal">Mulai Tes</button>
     </div>
   </main>
   </div>
@@ -65,8 +73,8 @@
             <li>Harap pastikan untuk membaca semua pernyataan dengan cermat dan jujur sebelum menentukan pilihan Anda.</li>
           </ul>
         </div>
-        <div class="modal-footer text-center w-100 d-flex justify-content-center">
-          <a href="{{ route('angketmai.show') }}" class="btn btn-primary">Mulai Mengerjakan</a>
+        <div class="button-container">
+          <a href="{{ route('angketmai.show') }}" class="custom-btn btn-primary-custom">Mulai Mengerjakan</a>
         </div>
       </div>
     </div>

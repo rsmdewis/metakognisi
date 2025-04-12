@@ -6,7 +6,7 @@
           <div class="navbar-brand-wrapper">
             <a class="navbar-brand brand-logo" href="/home"></a>
           </div>
-          <h2 class="font-weight-bold mb-0 d-none d-md-block mt-1">Metakognisi D4 TIF</h2>
+          <h2 class="font-weight-bold mb-0 d-none d-md-block mt-1">Metakognisi</h2>
           <ul class="navbar-nav navbar-nav-right">
             
             <li class="nav-item dropdown me-1">

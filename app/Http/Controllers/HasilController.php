@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\HasilAngket;
 use App\Models\AngketMetakognisi;
-use App\Models\Saran;
+use App\Models\SaranMetakognisi;
+use App\Models\Mahasiswa;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Auth;
 
 class HasilController extends Controller
@@ -75,41 +77,39 @@ class HasilController extends Controller
         return view('mahasiswa.hasil.info');
     }
     public function show()
-    {
-        $mahasiswa = Auth::guard('mahasiswa')->user();
-    
-    // Pastikan mahasiswa sudah login
+{
+    $mahasiswa = Auth::guard('mahasiswa')->user();
+
     if (!$mahasiswa) {
         return redirect()->route('login')->with('error', 'Silakan login terlebih dahulu.');
     }
 
-    // Ambil hasil angket berdasarkan NIM mahasiswa yang login
     $hasilAngket = HasilAngket::where('nim', $mahasiswa->nim)->first();
 
-    // Jika hasil angket tidak ditemukan
     if (!$hasilAngket) {
-        return redirect()->back()->with('error', 'Hasil angket tidak ditemukan.');
+        return view('mahasiswa.hasil.hasil', ['hasilAngket' => null]);
     }
 
-    // Menentukan kategori KM
+    // Menentukan kategori KM dan RM
     $kategori_km = array_keys([
         'rendah' => $hasilAngket->km_rendah,
         'sedang' => $hasilAngket->km_sedang,
         'tinggi' => $hasilAngket->km_tinggi
     ], max($hasilAngket->km_rendah, $hasilAngket->km_sedang, $hasilAngket->km_tinggi))[0];
 
-    // Menentukan kategori RM
     $kategori_rm = array_keys([
         'rendah' => $hasilAngket->rm_rendah,
         'sedang' => $hasilAngket->rm_sedang,
         'tinggi' => $hasilAngket->rm_tinggi
     ], max($hasilAngket->rm_rendah, $hasilAngket->rm_sedang, $hasilAngket->rm_tinggi))[0];
 
-    // Mengambil saran dari database
-    $saran_km = Saran::where('kategori', ucfirst($kategori_km))->where('kode_angket', 'KM')->value('saran');
-    $saran_rm = Saran::where('kategori', ucfirst($kategori_rm))->where('kode_angket', 'RM')->value('saran');
+    // Ambil saran dari database
+    $saran_km = SaranMetakognisi::where('kategori', ucfirst($kategori_km))->where('kode_angket', 'KM')->value('saran');
+    $saran_rm = SaranMetakognisi::where('kategori', ucfirst($kategori_rm))->where('kode_angket', 'RM')->value('saran');
 
-    // Menentukan kategori akhir berdasarkan fire strength (logika "dan")
+    
+
+    // Kategori akhir berdasarkan fire strength
     $fire_strength = [
         'rendah' => min($hasilAngket->km_rendah, $hasilAngket->rm_rendah),
         'sedang' => min($hasilAngket->km_sedang, $hasilAngket->rm_sedang),
@@ -118,7 +118,186 @@ class HasilController extends Controller
 
     $hasil_akhir = array_keys($fire_strength, max($fire_strength))[0];
 
-    // Tampilkan hasil di view
     return view('hasil', compact('hasilAngket', 'kategori_km', 'kategori_rm', 'saran_km', 'saran_rm', 'hasil_akhir'));
+}
+public function generatePDF()
+{
+    $mahasiswa = Auth::guard('mahasiswa')->user();
+
+        if (!$mahasiswa) {
+            return redirect()->route('login')->with('error', 'Silakan login terlebih dahulu.');
+        }
+
+        $hasilAngket = HasilAngket::where('nim', $mahasiswa->nim)->first();
+
+        if (!$hasilAngket) {
+            return redirect()->route('hasil')->with('error', 'Hasil angket tidak ditemukan.');
+        }
+
+        $kategori_km = array_keys([
+            'rendah' => $hasilAngket->km_rendah,
+            'sedang' => $hasilAngket->km_sedang,
+            'tinggi' => $hasilAngket->km_tinggi
+        ], max($hasilAngket->km_rendah, $hasilAngket->km_sedang, $hasilAngket->km_tinggi))[0];
+
+        $kategori_rm = array_keys([
+            'rendah' => $hasilAngket->rm_rendah,
+            'sedang' => $hasilAngket->rm_sedang,
+            'tinggi' => $hasilAngket->rm_tinggi
+        ], max($hasilAngket->rm_rendah, $hasilAngket->rm_sedang, $hasilAngket->rm_tinggi))[0];
+
+        $saran_km = SaranMetakognisi::where('kategori', ucfirst($kategori_km))->where('kode_angket', 'KM')->value('saran');
+        $saran_rm = SaranMetakognisi::where('kategori', ucfirst($kategori_rm))->where('kode_angket', 'RM')->value('saran');
+
+
+        $fire_strength = [
+            'rendah' => min($hasilAngket->km_rendah, $hasilAngket->rm_rendah),
+            'sedang' => min($hasilAngket->km_sedang, $hasilAngket->rm_sedang),
+            'tinggi' => min($hasilAngket->km_tinggi, $hasilAngket->rm_tinggi)
+        ];
+
+        $hasil_akhir = array_keys($fire_strength, max($fire_strength))[0];
+
+        $pdf = PDF::loadView('mahasiswa.hasil.download', compact('mahasiswa', 'hasilAngket', 'kategori_km', 'kategori_rm', 'saran_km', 'saran_rm', 'hasil_akhir'));
+        return $pdf->download('Hasil_Angket_' . $mahasiswa->nim . '.pdf');
+}
+public function laporan(Request $request)
+    {
+        // Ambil semua data hasil angket dari database
+        $hasilAngket = HasilAngket::all();
+
+        $data = $hasilAngket->map(function ($item) {
+            // Ambil nama mahasiswa berdasarkan NIM
+            $mahasiswa = Mahasiswa::where('nim', $item->nim)->first();
+            $nama = $mahasiswa ? $mahasiswa->nama : 'Tidak Diketahui';
+
+            // Tentukan kategori KM
+            $kategori_km = array_keys([
+                'rendah' => $item->km_rendah,
+                'sedang' => $item->km_sedang,
+                'tinggi' => $item->km_tinggi
+            ], max($item->km_rendah, $item->km_sedang, $item->km_tinggi))[0];
+
+            // Tentukan kategori RM
+            $kategori_rm = array_keys([
+                'rendah' => $item->rm_rendah,
+                'sedang' => $item->rm_sedang,
+                'tinggi' => $item->rm_tinggi
+            ], max($item->rm_rendah, $item->rm_sedang, $item->rm_tinggi))[0];
+
+            // Tentukan kategori Metakognisi
+            $fire_strength = [
+                'rendah' => min($item->km_rendah, $item->rm_rendah),
+                'sedang' => min($item->km_sedang, $item->rm_sedang),
+                'tinggi' => min($item->km_tinggi, $item->rm_tinggi)
+            ];
+            $hasil_akhir = array_keys($fire_strength, max($fire_strength))[0];
+
+            return [
+                'nim' => $item->nim,
+                'nama' => $nama,
+                'nilai_km' => $item->nilai_km,
+                'kategori_km' => ucfirst($kategori_km),
+                'nilai_rm' => $item->nilai_rm,
+                'kategori_rm' => ucfirst($kategori_rm),
+                'metakognisi' => ucfirst($hasil_akhir)
+            ];
+        }); 
+        $search = $request->input('search');
+        $filter_km = $request->input('filter_km');
+        $filter_rm = $request->input('filter_rm');
+        $filter_metakognisi = $request->input('filter_metakognisi');
+
+        if ($search) {
+            $data = $data->filter(function ($item) use ($search) {
+                return stristr($item['nim'], $search) || stristr($item['nama'], $search);
+            });
+        }
+
+        if ($filter_km) {
+            $data = $data->where('kategori_km', ucfirst($filter_km));
+        }
+
+        if ($filter_rm) {
+            $data = $data->where('kategori_rm', ucfirst($filter_rm));
+        }
+
+        if ($filter_metakognisi) {
+            $data = $data->where('metakognisi', ucfirst($filter_metakognisi));
+        }
+
+        return view('admin.laporan.laporan', compact('data', 'search', 'filter_km', 'filter_rm', 'filter_metakognisi'));
     }
+    public function downloadPdf(Request $request)
+{
+    // Ambil semua data hasil angket
+    $hasilAngket = HasilAngket::all();
+
+    $data = $hasilAngket->map(function ($item) {
+        $mahasiswa = Mahasiswa::where('nim', $item->nim)->first();
+        $nama = $mahasiswa ? $mahasiswa->nama : 'Tidak Diketahui';
+        $email = $mahasiswa ? $mahasiswa->email : 'Tidak Diketahui';
+
+        $kategori_km = array_keys([
+            'rendah' => $item->km_rendah,
+            'sedang' => $item->km_sedang,
+            'tinggi' => $item->km_tinggi
+        ], max($item->km_rendah, $item->km_sedang, $item->km_tinggi))[0];
+
+        $kategori_rm = array_keys([
+            'rendah' => $item->rm_rendah,
+            'sedang' => $item->rm_sedang,
+            'tinggi' => $item->rm_tinggi
+        ], max($item->rm_rendah, $item->rm_sedang, $item->rm_tinggi))[0];
+
+        $fire_strength = [
+            'rendah' => min($item->km_rendah, $item->rm_rendah),
+            'sedang' => min($item->km_sedang, $item->rm_sedang),
+            'tinggi' => min($item->km_tinggi, $item->rm_tinggi)
+        ];
+        $hasil_akhir = array_keys($fire_strength, max($fire_strength))[0];
+
+        return [
+            'nim' => $item->nim,
+            'nama' => $nama,
+            'nilai_km' => $item->nilai_km,
+            'kategori_km' => ucfirst($kategori_km),
+            'nilai_rm' => $item->nilai_rm,
+            'kategori_rm' => ucfirst($kategori_rm),
+            'metakognisi' => ucfirst($hasil_akhir)
+        ];
+    });
+
+    // FILTER DATA JIKA ADA REQUEST
+    $search = $request->input('search');
+    $filter_km = $request->input('filter_km');
+    $filter_rm = $request->input('filter_rm');
+    $filter_metakognisi = $request->input('filter_metakognisi');
+
+    if ($search) {
+        $data = $data->filter(function ($item) use ($search) {
+            return stristr($item['nim'], $search) || stristr($item['nama'], $search);
+        });
+    }
+
+    if ($filter_km) {
+        $data = $data->where('kategori_km', ucfirst($filter_km));
+    }
+
+    if ($filter_rm) {
+        $data = $data->where('kategori_rm', ucfirst($filter_rm));
+    }
+
+    if ($filter_metakognisi) {
+        $data = $data->where('metakognisi', ucfirst($filter_metakognisi));
+    }
+
+    // Generate PDF
+    $pdf = Pdf::loadView('admin.laporan.pdf', compact('data'));
+
+    // Return PDF untuk didownload
+    return $pdf->download('laporan_metakognisi.pdf');
+}
+
+
 }

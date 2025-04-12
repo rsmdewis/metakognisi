@@ -26,7 +26,90 @@
 
   <!-- Main CSS File -->
   <link href="assets/css/main.css" rel="stylesheet">
+  <style>
+    .modal-body {
+        padding-right: 30px; /* Tambahkan padding di sebelah kanan */
+        padding-left: 30px; /* Pastikan kiri juga seimbang */
+    }
 
+    .button-container {
+        display: flex;
+        justify-content: end;
+        gap: 15px; /* Jarak antar tombol */
+        margin-top: 20px; /* Tambahkan jarak atas agar tidak terlalu mepet */
+    }
+        .custom-btn {
+            border: 2px solid;
+            border-radius: 50px;
+            padding: 10px 30px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .btn-primary-custom {
+            color: #0d6efd;
+            border-color: #0d6efd;
+            background-color: transparent;
+        }
+
+        .btn-danger-custom {
+            color: #dc3545;
+            border-color: #dc3545;
+            background-color: transparent;
+        }
+
+        /* Hover Effect */
+        .btn-primary-custom:hover {
+            background-color: #0d6efd;
+            color: white;
+        }
+
+        .btn-danger-custom:hover {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: end;
+            gap: 10px;
+        }
+        /* Styling untuk label */
+        .form-label {
+    font-weight: normal;
+    color: #4a4a4a;
+}
+
+/* Styling untuk input field */
+.form-control {
+    font-size: 12px; /* Placeholder lebih kecil */
+    border-radius: 10px; /* Sudut lebih melengkung */
+    border: 1px solid #ced4da;
+    padding: 10px;
+    transition: all 0.3s ease-in-out;
+}
+.form-control::placeholder {
+    font-style: italic;
+    font-size: 12px;
+    color: #6c757d; /* Warna placeholder agar lebih soft */
+}
+
+/* Efek saat input difokuskan */
+.form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.3);
+    outline: none;
+}
+
+/* Styling untuk judul "Tes Kemampuan Metakognisi" */
+.modal-title {
+    color: #4a4a4a; /* Hitam pudar, tidak terlalu terang atau gelap */
+    font-weight: 500; /* Semi-bold */
+    font-size: 42px;
+}
+    </style>
   <!-- =======================================================
   * Template Name: Metakognisi
   * Template URL: https://bootstrapmade.com/quickstart-bootstrap-startup-website-template/
@@ -76,8 +159,8 @@
         <p data-aos="fade-up" data-aos-delay="100">Tes ini dirancang untuk membantu Anda mengenali dan meningkatkan
         kemampuan berpikir tentang cara Anda belajar dan menyelesaikan masalah<br></p>
         <div class="d-flex" data-aos="fade-up" data-aos-delay="200">
-            <a href="#about" class="btn-get-started">Get Started</a>
-            <a href="https://www.youtube.com/watch?v=LXb3EKWsInQ" class="glightbox btn-watch-video d-flex align-items-center"><i class="bi bi-play-circle"></i><span>Watch Video</span></a>
+        
+            <a  class="btn-get-started" data-bs-toggle="modal" data-bs-target="#exampleModal" style="cursor: pointer;">Get Started</a>
         </div>
     </div>
     <div class="col-lg-6 order-2 order-lg-2">
@@ -322,24 +405,35 @@
           </div>
           <div class="col-md-6" >
             <!-- Form -->
-            <h1 class="modal-title mb-4" id="exampleModalLabel"><strong>Tes Kemampuan Metakognisi</strong></h1>
+            <h1 class="modal-title mb-4" id="exampleModalLabel">
+                <strong>Tes Kemampuan Metakognisi</strong>
+            </h1>
+            
             <form id="loginForm"method="POST" action="{{ route('login-mahasiswa') }}">
               @csrf
               <div class="mb-3">
                 <label for="nim" class="form-label">NIM</label>
-                <input type="text" name="nim" class="form-control" id="nim" placeholder="Masukkan NIM Anda" required>
+                <input type="text" name="nim" class="form-control" id="nim2" placeholder="NIM Anda..." required>
+                <p id="nim2Error" style="color: red; display: none;"></p>
+                
               </div>
               <div class="mb-3">
                 <label for="password" class="form-label">Password</label>
-                <input type="password" name="password" class="form-control" id="password" placeholder="Masukkan Password Anda" required>
+                <input type="password" name="password" class="form-control" id="password2" placeholder="Password Anda..." required>
+                <p id="password2Error" style="color: red; display: none;"></p>
+                
               </div>
-              <div class="d-flex justify-content-end">
-                <button type="submit" class="btn btn-primary me-2" id="btnStart">Login</button>
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Batal</button>
-              </div>
+              <div class="button-container">
+                  <button type="submit" class="custom-btn btn-primary-custom" id="btnStart">Login</button>
+                  <button type="button" class="custom-btn btn-danger-custom" data-bs-dismiss="modal">Batal</button>
+              </div><br>
               
-              <a data-bs-toggle="modal" data-bs-target="#registerModal"  class="link-register">Belum Punya Akun? Daftar Sekarang</a> <br>
-                <a href="/angket">Angket MAI</a>
+              <p  style="color: #4a4a4a;">
+                  Belum Punya Akun? 
+                  <a class="link-register" data-bs-toggle="modal" data-bs-target="#registerModal" style="color: #0d6efd; font-weight: bold; text-decoration: none;">
+                      Daftar Sekarang
+                  </a>
+              </p> <br>
             </form>
           </div>
         </div>
@@ -349,9 +443,9 @@
 </div>
 <style>
   .link-register, .link-angket {
-    color: #007bff; /* Warna biru */
-    text-decoration: none; /* Menghilangkan garis bawah */
-    cursor: pointer; /* Mengubah kursor menjadi tangan */
+    color: #007bff; 
+    text-decoration: none; 
+    cursor: pointer; 
   }
 
   .link-register:hover, .link-angket:hover {
@@ -371,30 +465,38 @@
           <div class="col-md-6">
             <!-- Form -->
             <h1 class="modal-title mb-4" id="registerModalLabel"><strong>Registrasi Mahasiswa</strong></h1>
-            <form method="POST" action="{{ route('mahasiswa.register') }}">
+          
+            <form id="registerForm" method="POST" action="{{ route('mahasiswa.register') }}">
               @csrf
               <div class="mb-3">
-    <label for="nama" class="form-label">Nama</label>
-    <input type="text" class="form-control" id="nama" name="nama" placeholder="Masukkan Nama Anda">
-  </div>
-  <div class="mb-3">
-    <label for="nim" class="form-label">NIM</label>
-    <input type="text" class="form-control" id="nim" name="nim" placeholder="Masukkan NIM Anda">
-  </div>
-  <div class="mb-3">
-    <label for="email" class="form-label">Email</label>
-    <input type="email" class="form-control" id="email" name="email" placeholder="Masukkan Email Anda">
-  </div>
-  <div class="mb-3">
-    <label for="password" class="form-label">Password</label>
-    <input type="password" class="form-control" id="password" name="password" placeholder="Masukkan Password Anda">
-  </div>
-              <div style="text-align: right; margin-right: 20px; margin-bottom: 30px;">
-                <button type="submit" class="btn btn-primary" id="btnRegister" style="width: 80px; margin-right: 10px;">Daftar</button>
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal" style="width: 80px;">Batal</button>
-              </div>
-              <a data-bs-toggle="modal" data-bs-target="#exampleModal"  class="link-register">Sudah Punya Akun? Login Sekarang</a> <br>
-              <a href="/angket">Angket MAI</a>
+              <label for="nama" class="form-label">Nama</label>
+              <input type="text" class="form-control" id="nama" name="nama" placeholder="Nama Anda..." required>
+
+            </div>
+            <div class="mb-3">
+              <label for="nim" class="form-label">NIM</label>
+              <input type="text" class="form-control" id="nim" name="nim" placeholder="NIM Anda..." required>
+              <p id="nimError" style="color: red; display: none;"></p>
+            </div>
+            <div class="mb-3">
+              <label for="email" class="form-label">Email</label>
+              <input type="email" class="form-control" id="email" name="email" placeholder="Email Anda..." required>
+              <p id="emailError" style="color: red; display: none;"></p>
+            </div>
+            <div class="mb-3">
+              <label for="password" class="form-label">Password</label>
+              <input type="password" class="form-control" id="password" name="password" placeholder="Password Anda..." required>
+            </div>
+              <div class="button-container">
+                <button type="submit" class="custom-btn btn-primary-custom" id="btnRegister" >Daftar</button>
+                <button type="button" class="custom-btn btn-danger-custom" data-bs-dismiss="modal" >Batal</button>
+              </div><br>
+              <p  style="color: #4a4a4a;">
+                  Sudah Punya Akun? 
+                  <a class="link-register" data-bs-toggle="modal" data-bs-target="#exampleModal" style="color: #0d6efd; font-weight: bold; text-decoration: none;">
+                      Login Sekarang
+                  </a>
+              </p>
             </form>
           </div>
         </div>
@@ -402,7 +504,118 @@
     </div>
   </div>
 </div>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    document.querySelectorAll("input[required]").forEach(input => {
+        let errorMessage = document.createElement("div");
+        errorMessage.classList.add("text-danger", "small", "error-message");
+        errorMessage.style.display = "none"; // Sembunyikan dulu pesan error
+        input.parentNode.appendChild(errorMessage);
 
+        input.addEventListener("invalid", function(event) {
+            event.preventDefault(); // Mencegah pesan default browser
+            errorMessage.textContent = "Wajib diisi"; 
+            errorMessage.style.display = "block"; // Tampilkan pesan error
+            input.classList.add("is-invalid");
+        });
+
+        input.addEventListener("input", function() {
+            errorMessage.style.display = "none"; // Sembunyikan jika mulai mengetik
+            input.classList.remove("is-invalid");
+        });
+    });
+});
+
+// Fungsi untuk validasi format email
+function isValidEmailFormat(email) {
+    // Regular expression to check if email2 has @gmail.com domain
+    var regex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/i;
+    return regex.test(email);
+}
+function validateRegister(event) {
+    event.preventDefault(); // Mencegah form dikirim sebelum validasi
+
+    let nim = document.getElementById("nim").value.trim();
+    let email = document.getElementById("email").value.trim();
+    let nimError = document.getElementById("nimError");
+    let emailError = document.getElementById("emailError");
+    
+    nimError.style.display = "none";
+    emailError.style.display = "none";
+
+    if (!isValidEmailFormat(email)) {
+            alert("Format email salah. Email harus memiliki domain @gmail.com.");
+            this.style.borderColor = 'red';
+            return;
+        }
+    // if (!isValidEmailFormat(email)) {
+    //             emailError.textContent = "Format email salah. Harus menggunakan @gmail.com.";
+    //             emailError.style.display = "block";
+    //             return;
+    //         }
+    // Cek apakah NIM sudah terdaftar
+    fetch(`/check-nim?nim=${nim}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.exists) {
+                nimError.textContent = "NIM sudah terdaftar. Silakan gunakan NIM yang lain.";
+                nimError.style.display = "block";
+                return;
+            }
+            
+            // Cek apakah email sudah terdaftar
+            fetch(`/check-email?email=${email}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.exists) {
+                        emailError.textContent = "Email sudah terdaftar. Silakan gunakan email yang lain.";
+                        emailError.style.display = "block";
+                    } else {
+                        document.getElementById("registerForm").submit();
+                    }
+                });
+        });
+}
+
+document.getElementById("registerForm").addEventListener("submit", validateRegister);
+document.getElementById("loginForm").addEventListener("submit", function(event) {
+    event.preventDefault(); // Mencegah form dikirim dulu
+
+    let nim = document.getElementById("nim2").value.trim();
+    let password = document.getElementById("password2").value.trim();
+    let nimError = document.getElementById("nim2Error");
+    let passwordError = document.getElementById("password2Error");
+
+    // Reset pesan error
+    nimError.style.display = "none";
+    passwordError.style.display = "none";
+
+    // Lakukan pengecekan NIM di database (menggunakan AJAX Fetch)
+    fetch(`/check-nim?nim=${nim}`)
+    .then(response => response.json())
+    .then(data => {
+        if (!data.exists) {
+            nimError.textContent = "NIM tidak terdaftar.";
+            nimError.style.display = "block";
+            return;
+        }
+
+        // Jika NIM terdaftar, periksa password
+        fetch(`/check-password?nim=${nim}&password=${password}`)
+        .then(response => response.json())
+        .then(data => {
+            if (!data.correct) {
+                passwordError.textContent = "Password salah.";
+                passwordError.style.display = "block";
+            } else {
+                // Jika semua benar, kirim form
+                document.getElementById("loginForm").submit();
+            }
+        });
+    });
+});
+
+</script>
 
     <div class="container copyright text-center mt-4">
       <p>© <span>Copyright</span> <strong class="px-1 sitename">Metakognisi</strong><span>All Rights Reserved</span></p>

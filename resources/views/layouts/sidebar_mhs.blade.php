@@ -28,7 +28,7 @@
   <link href="assets/css/main.css" rel="stylesheet">
   <style>
     .active-page { background-color: #388da8; color: white; }
-    .answered { background-color: green; color: white; }
+    .answered { background-color: #5cb85c; color: white; }
 
     #sidebar {
       position: fixed;
@@ -115,6 +115,60 @@
     font-size: 12px;
     color:rgb(211, 208, 208);
   }
+  .button-container {
+        display: flex;
+        justify-content: center;
+        gap: 15px; 
+        margin-top: 10px; 
+        padding-bottom: 40px;
+    }
+        .custom-btn {
+            border: 2px solid;
+            border-radius: 50px;
+            padding: 10px 50px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .btn-primary-custom {
+            color: #2b6d82;
+            border-color: #2b6d82;
+            background-color: transparent;
+        }
+
+        .btn-success-custom {
+            color: #5cb85c;
+            border-color: #5cb85c;
+            background-color: transparent;
+        }
+
+        /* Hover Effect */
+        .btn-primary-custom:hover {
+            background-color: #2b6d82;
+            color: white;
+        }
+
+        .btn-success-custom:hover {
+            background-color: #5cb85c;
+            color: white;
+        }
+        .btn-nav {
+    width: 120px; /* Sesuaikan lebar tombol */
+    height: 45px; /* Sesuaikan tinggi tombol */
+    border-radius: 25px; /* Membuat sudut lebih melengkung */
+    font-size: 16px; /* Menyesuaikan ukuran font */
+    font-weight: bold;
+    opacity: 1; /* Default tidak transparan */
+    transition: all 0.3s ease; /* Efek transisi */
+}
+
+/* Tombol disabled */
+.btn-nav:disabled {
+    opacity: 0.5; /* Membuat tombol redup jika tidak aktif */
+    cursor: not-allowed; /* Mengubah kursor menjadi tanda larangan */
+}
   </style>
   <link href="https://cdn.jsdelivr.net/npm/@mdi/font/css/materialdesignicons.min.css" rel="stylesheet">
 
@@ -154,6 +208,18 @@
         <i class="mdi mdi-chart-bar menu-icon"></i> <!-- Chart icon -->
         <span>Hasil</span>
     </a>
+    <a href="{{ route('mahasiswa.profile') }}">
+        <i class="mdi mdi-account-circle menu-icon"></i> <!-- Chart icon -->
+        <span>Profile</span>
+    </a>
+
+    <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="btn btn-danger text-white">
+    <i class="mdi mdi-logout menu-icon"></i> Logout
+</a>
+
+<form id="logout-form" action="{{ route('logout-mahasiswa') }}" method="POST" style="display: none;">
+    @csrf
+</form>
   </div>
 
   <!-- Page content -->
@@ -185,6 +251,11 @@
 
   <!-- Main JS File -->
   <script src="assets/js/main.js"></script>
+  <script>
+    function confirmLogout() {
+        return confirm("Apakah Anda yakin ingin logout?");
+    }
+</script>
 
 </body>
 

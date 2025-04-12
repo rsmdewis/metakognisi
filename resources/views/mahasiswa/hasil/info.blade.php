@@ -107,10 +107,10 @@
 
   <div class="d-flex justify-content-center align-items-center vh-100 bg-light text-center" data-aos="fade">
     <div>
-        <h3 class="fw-bold" style="font-family: 'Times New Roman', serif; font-size: 28px;">
-            Anda telah menyelesaikan tes <br> <span class="text-primary">Metacognitive Awareness Inventory</span>
+        <h3 class="fw-bold" style=" font-size: 28px;">
+            Anda telah menyelesaikan tes <br> <span style="color: #388da8;">Metacognitive Awareness Inventory</span>
         </h3>
-        <p style="font-family: 'Times New Roman', serif; font-size: 18px;">
+        <p style=" font-size: 18px;">
             Silakan lihat hasil dari kemampuan metakognisi Anda!
         </p>
         <a href="{{ route('angket.hasil') }}" class="btn btn-primary btn-lg mt-3 px-4 py-2 shadow-lg rounded-pill" 
